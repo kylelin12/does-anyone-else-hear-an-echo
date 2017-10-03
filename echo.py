@@ -9,7 +9,13 @@ def root():
 # The /echo page uses the POST method and has username and method as arguments
 @echo_app.route('/echo', methods=["POST", "GET"])
 def echo():
-    return render_template('echo_echo.html', username = request.form['username'], method = request.method)
+    if request.method == 'POST':
+        username = request.form['username']
+        method = 'POST'
+    else:
+        username = request.args['username']
+        method = 'GET'
+    return render_template('echo_echo.html', username = username, method = method)
 
 if __name__ == '__main__':
     echo_app.debug = True
